@@ -23,7 +23,7 @@ ChartJS.register(
 
 
 function ValutePicker() {
-
+  console.log("test")
     const selectValue = useRef(0)
 
     const handleChange = (value) => {
@@ -68,7 +68,7 @@ function ValutePicker() {
     function test() {
 
     }
-console.log("test")
+
 
 
 
