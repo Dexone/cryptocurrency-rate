@@ -35,8 +35,6 @@ function ValutePicker() {
   })
 
 
-
-
   const dataLabels = useRef([])
   const dataValues = useRef([])
 
