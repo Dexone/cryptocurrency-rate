@@ -26,7 +26,12 @@ function ValutePicker() {
 
 
   const [selectedValute, setSelectedValute] = useState("bitcoin"); //select
+  const [text, setText] = useState('');
 
+  function test(){
+    console.log("тест")
+    console.log(text)
+  }
 
   axios.get(`https://api.coincap.io/v2/assets/${selectedValute}/history?interval=h1`).then((res) => {
     console.log(selectedValute)
@@ -38,7 +43,7 @@ function ValutePicker() {
   const dataLabels = useRef([])
   const dataValues = useRef([])
 
-
+const newCompany = useRef([])
 
   const data = {
     labels: dataLabels.value,
@@ -57,13 +62,14 @@ function ValutePicker() {
   }
 
 
-
-
-
-
-
   return (
     <>
+      <input
+        value={text}
+        onChange={e => setText(e.target.value)}
+      />
+<button onClick={test}>Добавить</button>
+
       <div className='ValutePicker'>
 
 
