@@ -23,27 +23,31 @@ ChartJS.register(
 
 
 function ValutePicker() {
-
-
   const [selectedValute, setSelectedValute] = useState("bitcoin"); //select
-  const [text, setText] = useState('');
+  const [text, setText] = useState(" "); //input
 
-  function test(){
-    console.log("тест")
-    console.log(text)
+  const people = useRef(['bitcoin', 'ethereum', 'litecoin'])
+  const listItems = people.current.map(e =>
+    <div onClick={e => setSelectedValute(e.target.firstChild.data)}>{e}<button onClick={console.log()}>Удалить</button></div>
+  );
+
+  function add() {
+    people.current.push(text)
+    setText("")
   }
 
+
+
+
+  //--------------------------------------------------------------------------------------------------------
+
   axios.get(`https://api.coincap.io/v2/assets/${selectedValute}/history?interval=h1`).then((res) => {
-    console.log(selectedValute)
+
     dataLabels.value = [res.data.data[715].date.slice(11, 16), res.data.data[716].date.slice(11, 16), res.data.data[717].date.slice(11, 16), res.data.data[718].date.slice(11, 16), res.data.data[719].date.slice(11, 16)]
     dataValues.value = [res.data.data[715].priceUsd, res.data.data[716].priceUsd, res.data.data[717].priceUsd, res.data.data[718].priceUsd, res.data.data[719].priceUsd]
   })
-
-
   const dataLabels = useRef([])
   const dataValues = useRef([])
-
-const newCompany = useRef([])
 
   const data = {
     labels: dataLabels.value,
@@ -64,23 +68,14 @@ const newCompany = useRef([])
 
   return (
     <>
-      <input
-        value={text}
-        onChange={e => setText(e.target.value)}
-      />
-<button onClick={test}>Добавить</button>
+
+
+
+
 
       <div className='ValutePicker'>
+        <h2>CRYPTOCURRENCY RATE</h2>
 
-
-        <select
-          value={selectedValute}
-          onChange={e => setSelectedValute(e.target.value)}
-        >
-          <option value="bitcoin">Bitcoin</option>
-          <option value="ethereum">Ethereum</option>
-          <option value="litecoin">Litecoin</option>
-        </select>
 
         <div className="App">
           <Line
@@ -88,6 +83,23 @@ const newCompany = useRef([])
             options={options}
           ></Line>
         </div>
+
+
+
+
+        {/* <select value={selectedValute}
+          onChange={e => setSelectedValute(e.target.value)}>     {listItems}</select> */}
+
+
+        {listItems}
+
+        <button onClick={add}>add</button>
+
+        <input
+          onChange={e => setText(e.target.value)}
+        />
+
+
       </div>
     </>
   );
